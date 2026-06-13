@@ -2,6 +2,9 @@
 
 **Read-only Modbus TCP monitoring, exposed as safe MCP tools.**
 
+[![CI](https://github.com/codenikhildr/Forgeline/actions/workflows/ci.yml/badge.svg)](https://github.com/codenikhildr/Forgeline/actions/workflows/ci.yml)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+
 Forgeline is an [MCP](https://modelcontextprotocol.io) server that lets an AI
 agent **monitor** an industrial Modbus TCP device — read holding/input
 registers, coils, and device identity — without any ability to change it.
@@ -191,6 +194,18 @@ The bundled simulator pre-populates each table (addresses are zero-based):
 | Input registers            | 0x04 | 0–99      | `200 + addr`  |
 | Coils                      | 0x01 | 0–99      | `addr % 2`    |
 | Discrete inputs            | 0x02 | 0–99      | `(addr+1) % 2`|
+
+## Development
+
+Run the test suite — it starts the bundled simulator on a test port and
+exercises all four tools plus the input-validation guards:
+
+```bash
+pip install -e ".[dev]"
+pytest
+```
+
+CI runs the same suite on every push and pull request across Python 3.10–3.12.
 
 ## License
 

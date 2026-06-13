@@ -27,3 +27,8 @@ forgeline-simulator = "simulator.device:run"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/forgeline", "simulator"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+pythonpath = ["src", "."]
+testpaths = ["tests"]
