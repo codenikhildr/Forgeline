@@ -5,6 +5,10 @@
 [![CI](https://github.com/codenikhildr/Forgeline/actions/workflows/ci.yml/badge.svg)](https://github.com/codenikhildr/Forgeline/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
+<p align="center">
+  <img src="docs/architecture.svg" alt="Forgeline architecture: an AI agent reads a Modbus device over MCP, read-only by design" width="100%">
+</p>
+
 Forgeline is an [MCP](https://modelcontextprotocol.io) server that lets an AI
 agent **monitor** an industrial Modbus TCP device — read holding/input
 registers, coils, and device identity — without any ability to change it.
