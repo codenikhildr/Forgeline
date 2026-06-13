@@ -1,0 +1,33 @@
+# Starts the bundled Modbus simulator and the Forgeline MCP server together.
+#
+#   docker compose up --build
+#
+# - simulator: a virtual Modbus TCP device on port 5020 (zero hardware needed).
+# - forgeline: the MCP server, exposed over streamable-http on port 8000 so it
+#   stays up as a long-lived service. Point an MCP client at http://localhost:8000/mcp
+services:
+  simulator:
+    build: .
+    command: forgeline-simulator
+    environment:
+      SIMULATOR_HOST: "0.0.0.0"
+      SIMULATOR_PORT: "5020"
+    ports:
+      - "5020:5020"
+
+  forgeline:
+    build: .
+    command: forgeline
+    depends_on:
+      - simulator
+    environment:
+      # Talk to the simulator service over the compose network.
+      MODBUS_HOST: "simulator"
+      MODBUS_PORT: "5020"
+      MODBUS_UNIT_ID: "1"
+      # Run an HTTP MCP transport so the container stays alive as a service.
+      FORGELINE_TRANSPORT: "streamable-http"
+      FORGELINE_HOST: "0.0.0.0"
+      FORGELINE_PORT: "8000"
+    ports:
+      - "8000:8000"

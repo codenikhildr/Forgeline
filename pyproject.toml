@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "forgeline"
+version = "0.1.0"
+description = "Read-only Modbus TCP monitoring exposed as safe MCP tools."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+authors = [{ name = "Forgeline contributors" }]
+keywords = ["mcp", "modbus", "industrial", "scada", "monitoring"]
+dependencies = [
+    # Official MCP Python SDK (FastMCP server).
+    "mcp>=1.2.0",
+    # Modbus stack + bundled simulator. Pinned to the 3.6.x API used here.
+    "pymodbus>=3.6,<3.7",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-asyncio>=0.23"]
+
+[project.scripts]
+forgeline = "forgeline.server:main"
+forgeline-simulator = "simulator.device:run"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/forgeline", "simulator"]
