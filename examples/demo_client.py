@@ -1,14 +1,7 @@
-"""Standalone MCP client demo for Forgeline.
+"""Quick MCP client to exercise Forgeline over streamable-HTTP.
 
-Connects to the running Forgeline MCP server over streamable-HTTP using the
-official MCP Python SDK, lists the tools, and calls all four against the bundled
-simulator. Useful for verifying functionality and capturing demo output without
-needing an MCP client UI.
-
-Usage (with the server running, e.g. via `docker compose up`):
-
-    python examples/demo_client.py
-    python examples/demo_client.py http://localhost:8000/mcp   # custom URL
+Run with the server up (e.g. docker compose up):
+    python examples/demo_client.py [http://localhost:8000/mcp]
 """
 
 import asyncio
@@ -27,16 +20,15 @@ CALLS = [
 ]
 
 
-async def main(url: str) -> None:
-    print(f"Connecting to Forgeline MCP server at {url}\n")
+async def main(url):
+    print(f"Connecting to {url}\n")
     async with streamablehttp_client(url) as (read, write, _):
         async with ClientSession(read, write) as session:
             init = await session.initialize()
-            print(f"Connected. Server: {init.serverInfo.name} "
-                  f"(protocol {init.protocolVersion})\n")
+            print(f"Connected to {init.serverInfo.name} (protocol {init.protocolVersion})\n")
 
             tools = (await session.list_tools()).tools
-            print(f"Tools exposed ({len(tools)}):")
+            print(f"Tools ({len(tools)}):")
             for tool in tools:
                 print(f"  - {tool.name}")
             print()
@@ -50,5 +42,5 @@ async def main(url: str) -> None:
 
 
 if __name__ == "__main__":
-    target = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_URL
-    asyncio.run(main(target))
+    url = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_URL
+    asyncio.run(main(url))

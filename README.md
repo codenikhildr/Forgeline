@@ -10,21 +10,18 @@
 </p>
 
 Forgeline is an [MCP](https://modelcontextprotocol.io) server that lets an AI
-agent **monitor** an industrial Modbus TCP device — read holding/input
-registers, coils, and device identity — without any ability to change it.
+agent monitor an industrial Modbus TCP device — reading holding/input registers,
+coils, and device identity — without being able to change anything.
 
-> **Safety by design.** This MVP exposes **read-only** tools only. There are no
-> write/command tools, and no helper code exists to write coils or registers.
-> An agent connected to Forgeline cannot alter device state.
+It's read-only on purpose: there are no write or command tools, and no code that
+writes coils or registers, so a connected agent can't alter device state.
 
-A simulated Modbus device is bundled, so you can run the whole thing with **zero
-hardware**.
+A simulated Modbus device is bundled, so you can run it with no hardware.
 
 ## Status
 
-MVP complete. All four read-only tools — `get_device_info`,
-`read_holding_registers`, `read_input_registers`, and `read_coils` — are
-implemented and verified end-to-end against the bundled simulator.
+Working MVP. Four read-only tools — `get_device_info`, `read_holding_registers`,
+`read_input_registers`, `read_coils` — tested against the bundled simulator.
 
 ## Project layout
 

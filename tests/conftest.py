@@ -1,9 +1,4 @@
-"""Shared test fixtures.
-
-Runs the bundled Modbus simulator on a dedicated test port (in a background
-thread with its own event loop, so it's independent of pytest-asyncio's loop)
-and tears down automatically when the test process exits.
-"""
+"""Test fixtures: run the bundled simulator on a separate port for the suite."""
 
 import asyncio
 import socket
@@ -16,29 +11,26 @@ from pymodbus.server import StartAsyncTcpServer
 from forgeline.tools import ModbusSettings
 from simulator.device import build_context, build_identity
 
-# A port distinct from the default (5020) so tests don't clash with a locally
-# running simulator / docker stack.
 TEST_HOST = "127.0.0.1"
-TEST_PORT = 5021
+TEST_PORT = 5021  # avoid clashing with a local/docker simulator on 5020
 
 
-def _serve_forever() -> None:
-    """Run the simulator forever in this thread's own event loop."""
+def _serve_forever():
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-    coro = StartAsyncTcpServer(
-        context=build_context(),
-        identity=build_identity(),
-        address=(TEST_HOST, TEST_PORT),
-    )
     try:
-        loop.run_until_complete(coro)
-    except Exception:  # noqa: BLE001 - thread is daemonized; swallow on shutdown
+        loop.run_until_complete(
+            StartAsyncTcpServer(
+                context=build_context(),
+                identity=build_identity(),
+                address=(TEST_HOST, TEST_PORT),
+            )
+        )
+    except Exception:  # noqa: BLE001
         pass
 
 
-def _wait_for_port(host: str, port: int, timeout: float = 15.0) -> None:
-    """Block until the simulator is accepting connections, or raise."""
+def _wait_for_port(host, port, timeout=15.0):
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
         try:
@@ -46,20 +38,16 @@ def _wait_for_port(host: str, port: int, timeout: float = 15.0) -> None:
                 return
         except OSError:
             time.sleep(0.1)
-    raise RuntimeError(f"Simulator did not start on {host}:{port} within {timeout}s")
+    raise RuntimeError(f"simulator did not start on {host}:{port}")
 
 
 @pytest.fixture(scope="session", autouse=True)
 def simulator():
-    """Start the simulator once for the whole test session."""
-    thread = threading.Thread(target=_serve_forever, daemon=True)
-    thread.start()
+    threading.Thread(target=_serve_forever, daemon=True).start()
     _wait_for_port(TEST_HOST, TEST_PORT)
     yield
-    # Daemon thread is torn down with the process; no explicit shutdown needed.
 
 
 @pytest.fixture
-def settings() -> ModbusSettings:
-    """Connection settings pointing at the test simulator."""
+def settings():
     return ModbusSettings(host=TEST_HOST, port=TEST_PORT, unit_id=1)
