@@ -67,42 +67,36 @@
   <!-- node: AI Agent -->
   <g>
     <rect class="box frame" x="80" y="230" width="240" height="150" rx="14"/>
-    <g transform="translate(0,2)">
-      <circle cx="155" cy="284" r="2.5" class="ic"/>
-      <line x1="155" y1="287" x2="155" y2="293" class="ic"/>
-      <rect x="133" y="293" width="44" height="34" rx="8" class="ic"/>
-      <circle cx="146" cy="308" r="3" fill="#22D3EE"/>
-      <circle cx="164" cy="308" r="3" fill="#22D3EE"/>
-      <line x1="147" y1="319" x2="163" y2="319" class="ic"/>
-    </g>
-    <text x="205" y="305" class="pri" font-size="22" font-weight="700">AI Agent</text>
-    <text x="205" y="330" class="sec" font-size="15">Any MCP client</text>
+    <circle cx="116" cy="280" r="2.5" class="ic"/>
+    <line x1="116" y1="283" x2="116" y2="288" class="ic"/>
+    <rect x="94" y="288" width="44" height="34" rx="8" class="ic"/>
+    <circle cx="107" cy="304" r="3" fill="#22D3EE"/>
+    <circle cx="125" cy="304" r="3" fill="#22D3EE"/>
+    <line x1="108" y1="314" x2="124" y2="314" class="ic"/>
+    <text x="152" y="301" class="pri" font-size="20" font-weight="700">AI Agent</text>
+    <text x="152" y="326" class="sec" font-size="13.5">Any MCP client</text>
   </g>
 
   <!-- node: Forgeline (core) -->
   <g class="core">
     <rect class="box frame" x="480" y="230" width="240" height="150" rx="14"/>
-    <g transform="translate(0,1)">
-      <path d="M540,278 L562,287 L562,307 Q562,324 540,332 Q518,324 518,307 L518,287 Z" class="icc" filter="url(#glow)"/>
-      <path d="M530,305 L538,313 L552,297" class="icc"/>
-    </g>
-    <text x="600" y="300" class="cy" font-size="22" font-weight="700">Forgeline</text>
-    <text x="600" y="325" class="sec" font-size="15">Read-only MCP server</text>
+    <path d="M516,278 L538,287 L538,307 Q538,324 516,332 Q494,324 494,307 L494,287 Z" class="icc" filter="url(#glow)"/>
+    <path d="M506,305 L514,313 L528,297" class="icc"/>
+    <text x="552" y="301" class="cy" font-size="20" font-weight="700">Forgeline</text>
+    <text x="552" y="326" class="sec" font-size="13.5">Read-only MCP server</text>
   </g>
 
   <!-- node: Modbus device -->
   <g>
     <rect class="box frame" x="880" y="230" width="240" height="150" rx="14"/>
-    <g transform="translate(0,0)">
-      <rect x="936" y="296" width="42" height="26" class="ic"/>
-      <rect x="938" y="282" width="6" height="14" class="ic"/>
-      <path d="M948,296 v-6 l8,6 v-6 l8,6 v-6 l8,6" class="ic"/>
-      <rect x="942" y="305" width="5" height="5" fill="#C9D1D9"/>
-      <rect x="954" y="305" width="5" height="5" fill="#C9D1D9"/>
-      <rect x="966" y="305" width="5" height="5" fill="#C9D1D9"/>
-    </g>
-    <text x="1000" y="305" class="pri" font-size="22" font-weight="700">Modbus device</text>
-    <text x="1000" y="330" class="sec" font-size="15">Bundled simulator</text>
+    <rect x="894" y="296" width="44" height="26" class="ic"/>
+    <rect x="896" y="283" width="6" height="13" class="ic"/>
+    <path d="M906,296 v-6 l8,6 v-6 l8,6 v-6 l8,6" class="ic"/>
+    <rect x="900" y="305" width="5" height="5" fill="#C9D1D9"/>
+    <rect x="912" y="305" width="5" height="5" fill="#C9D1D9"/>
+    <rect x="924" y="305" width="5" height="5" fill="#C9D1D9"/>
+    <text x="952" y="301" class="pri" font-size="20" font-weight="700">Modbus device</text>
+    <text x="952" y="326" class="sec" font-size="13.5">Bundled simulator</text>
   </g>
 
   <!-- flows + traveling pulses -->
